@@ -1,4 +1,4 @@
-const func = require("./contacts");
+const api = require("./contacts");
 const { Command } = require("commander");
 const program = new Command();
 program
@@ -16,20 +16,23 @@ console.log(argv);
 async function invokeAction({ action, name, email, phone, id }) {
   switch (action) {
     case "list":
-      const db = await func.listContacts();
-      console.table(db.contacts);
+      const contacts = await api.listContacts();
+      console.table(contacts);
       break;
 
     case "get":
-      await func.getContactById(id);
+      const contact = await api.getContactById(id);
+      console.table(contact);
       break;
 
     case "remove":
-      await func.removeContact(id);
+      const removedContact = await api.removeContact(id);
+      console.table(removedContact);
       break;
 
     case "add":
-      await func.addContact(name, email, phone);
+      const newContact = await api.addContact(name, email, phone);
+      console.table(newContact);
       break;
 
     default:
